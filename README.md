@@ -28,17 +28,21 @@ python3 -m http.server 8000
 
 ## Images
 
-All imagery is **inline SVG illustrations** embedded directly in `index.html` — no network requests, no external hosts, works offline and on `file://`. The showcase tiles use themed gradient landscapes (city skyline, cathedral dome, tropical palm, mountains, icebergs, desert dunes), and the About section uses a stylized airplane-window view.
+The six showcase tiles use **real photography hotlinked from Unsplash's CDN** (`images.unsplash.com` / `plus.unsplash.com`). Unsplash photos are free for commercial use with no attribution required. The About section uses an inline SVG airplane-window illustration.
 
-To swap in real photography later:
+To swap a showcase photo:
 
-1. Find photos on [Unsplash](https://unsplash.com), [Pexels](https://pexels.com), or your own library and save them to an `images/` folder.
-2. In `index.html`, replace each `<svg class="tile-art">…</svg>` block with `<img src="images/your-photo.jpg" alt="Descriptive alt" loading="lazy" decoding="async">`.
-3. The CSS selectors `.showcase__tile .tile-art` and `.about__media .about-art` already cover-size their children, so `<img>` replacements just need `width: 100%; height: 100%; object-fit: cover;` which you can add by swapping the class to `img` or adding a rule.
-4. Update the `alt` attribute with a real description so screen-reader users get meaningful context.
+1. Find a replacement on [Unsplash](https://unsplash.com). Right-click the large photo → **Copy image address** — the URL should start with `https://images.unsplash.com/photo-...` or `https://plus.unsplash.com/premium_photo-...`.
+2. In `index.html`, find the relevant `<img class="tile-art" …>` inside `.showcase__grid` and replace its `src` with your new URL. Keep `w=1200` in the query string for a crisp tile.
+3. Update the `alt` attribute with a real description so screen-reader users get meaningful context.
+
+To self-host instead of hotlinking (recommended long-term — hotlinks can break if Unsplash rotates CDN paths):
+
+1. Download each image, save it to an `images/` folder alongside `index.html`.
+2. Swap each `src="https://images.unsplash.com/…"` for `src="images/your-photo.jpg"`.
+3. The existing `.showcase__tile .tile-art { object-fit: cover; }` rule in `styles.css` handles sizing.
 
 ## What's intentionally out of scope
 
 - No backend — the contact form composes a `mailto:` link. Swap in Formspree / Netlify Forms when you want real submissions.
-- No imagery — gradient hero and typographic layout keep the page fast and offline-friendly.
 - No analytics, cookie banner, or legal pages — add when the business side is ready.
