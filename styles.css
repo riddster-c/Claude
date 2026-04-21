@@ -288,6 +288,7 @@ p { margin: 0 0 1em; }
   box-shadow: var(--shadow-sm);
   background: linear-gradient(135deg, #e9dfc6, #c9a86a);
   isolation: isolate;
+  min-height: 220px;
 }
 .showcase__tile .tile-art {
   width: 100%;
@@ -593,7 +594,8 @@ p { margin: 0 0 1em; }
 .copyright { font-size: 0.85rem; margin: 0; color: rgba(247, 244, 238, 0.55); }
 
 /* ---------- Reveal animation ---------- */
-.reveal {
+.no-js .reveal { opacity: 1; transform: none; }
+html:not(.no-js) .reveal {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 600ms ease, transform 600ms ease;
