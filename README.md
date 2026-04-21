@@ -28,16 +28,14 @@ python3 -m http.server 8000
 
 ## Images
 
-Stock photos are hotlinked from [picsum.photos](https://picsum.photos) using seeded URLs (e.g. `https://picsum.photos/seed/whisper-tokyo/900/700`) — they load in any browser with internet access, no API key needed. The seeds are deterministic, so the same image appears every time.
+All imagery is **inline SVG illustrations** embedded directly in `index.html` — no network requests, no external hosts, works offline and on `file://`. The showcase tiles use themed gradient landscapes (city skyline, cathedral dome, tropical palm, mountains, icebergs, desert dunes), and the About section uses a stylized airplane-window view.
 
-To swap in curated, on-brand photography:
+To swap in real photography later:
 
-1. Find photos on [Unsplash](https://unsplash.com), [Pexels](https://pexels.com), or your own library.
-2. Replace each `https://picsum.photos/seed/...` URL in `index.html` with your chosen image URL. For Unsplash, the direct-image URL pattern is `https://images.unsplash.com/photo-{ID}?w=1200&q=80&auto=format&fit=crop`.
-3. The hero backdrop URL lives in `styles.css` (search for `whisper-skyline`).
-4. Update the `alt=""` attribute on each `<img>` with a real description once you know what the photo shows.
-
-For fully offline use, download your chosen images into an `images/` folder and update the `src` paths accordingly.
+1. Find photos on [Unsplash](https://unsplash.com), [Pexels](https://pexels.com), or your own library and save them to an `images/` folder.
+2. In `index.html`, replace each `<svg class="tile-art">…</svg>` block with `<img src="images/your-photo.jpg" alt="Descriptive alt" loading="lazy" decoding="async">`.
+3. The CSS selectors `.showcase__tile .tile-art` and `.about__media .about-art` already cover-size their children, so `<img>` replacements just need `width: 100%; height: 100%; object-fit: cover;` which you can add by swapping the class to `img` or adding a rule.
+4. Update the `alt` attribute with a real description so screen-reader users get meaningful context.
 
 ## What's intentionally out of scope
 
