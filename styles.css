@@ -659,7 +659,7 @@ p { margin: 0 0 1em; }
   .primary-nav ul { display: flex; padding: 0; }
 
   .steps { grid-template-columns: repeat(3, 1fr); }
-  .cards { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+  .cards { grid-template-columns: repeat(2, 1fr); align-items: stretch; max-width: 820px; margin-inline: auto; }
 
   .showcase__grid {
     grid-template-columns: repeat(3, 1fr);
