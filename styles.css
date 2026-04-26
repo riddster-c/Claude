@@ -607,9 +607,18 @@ p { margin: 0 0 1em; }
 .contact__social {
   margin-top: 1rem;
   font-size: 0.95rem;
-  color: var(--ink-soft, inherit);
 }
-.contact__social a { font-weight: 600; }
+.contact__social a {
+  color: var(--gold-bright);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 188, 133, 0.4);
+  text-underline-offset: 3px;
+}
+.contact__social a:hover {
+  color: var(--cream);
+  text-decoration-color: var(--cream);
+}
 
 /* ---------- Reveal animation ---------- */
 .reveal {
