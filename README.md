@@ -1,14 +1,14 @@
 # The Miles Whisperer — Landing Page
 
-A single-page marketing site for **The Miles Whisperer**, a service that helps travelers redeem airline and hotel points for business- and first-class trips. Built with plain HTML, CSS, and a sprinkle of vanilla JS — no build step, no dependencies.
+A single-page publication site for **The Miles Whisperer**, an independent, Singapore-based award-travel newsletter. Built with plain HTML, CSS, and a sprinkle of vanilla JS — no build step, no dependencies. The site's single conversion goal is newsletter signups.
 
 ## Structure
 
 ```
 .
-├── index.html    # All page sections (hero, how it works, services, about, FAQ, contact)
+├── index.html    # Hero, showcase, what's inside, value cards, about, insights, newsletter, waitlist, footer
 ├── styles.css    # Palette, typography, responsive layout
-└── script.js     # Mobile nav, scroll reveal, contact-form → mailto
+└── script.js     # Mobile nav, scroll reveal, newsletter form → mailto
 ```
 
 ## Run it locally
@@ -20,11 +20,22 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
+## Wiring up real newsletter signups
+
+The two `.newsletter-form` blocks (final CTA section + footer) currently open a `mailto:hello@themileswhisperer.com` with the subscriber's email in the body. To switch to a real provider:
+
+- **ConvertKit / Kit** — replace each `<form class="newsletter-form" novalidate>` with the embed markup ConvertKit generates. Keep the outer classes so the styles still apply, and delete the corresponding `.newsletter-form` submit handler in `script.js`.
+- **Buttondown** — same idea; the embed action is `https://buttondown.email/api/emails/embed-subscribe/<username>`.
+- **Substack** — Substack doesn't offer arbitrary HTML embeds; the cleanest option is to keep the current form and POST to their subscribe endpoint via fetch(), or link out to the Substack subscribe page as the button `href`.
+
+The "Join the waitlist" CTA in the Concierge section is a `mailto:` link. Swap to a form when you're ready to collect structured waitlist entries.
+
 ## Editing the content
 
-- **Brand name, copy, and pricing:** edit directly in `index.html`.
+- **Copy, positioning, article titles:** edit directly in `index.html`.
 - **Colors and fonts:** CSS custom properties at the top of `styles.css` (`--navy`, `--gold`, `--font-display`, …).
 - **Contact email:** search for `hello@themileswhisperer.com` in `index.html` and `script.js` and replace.
+- **Instagram handle:** search for `@themileswhisperer` and `instagram.com/themileswhisperer` and replace.
 
 ## Images
 
@@ -44,5 +55,6 @@ To self-host instead of hotlinking (recommended long-term — hotlinks can break
 
 ## What's intentionally out of scope
 
-- No backend — the contact form composes a `mailto:` link. Swap in Formspree / Netlify Forms when you want real submissions.
+- **No paid services.** No pricing, no packages, no checkout — this is a publication, not a store.
+- **No real newsletter backend by default** — see "Wiring up real newsletter signups" above.
 - No analytics, cookie banner, or legal pages — add when the business side is ready.

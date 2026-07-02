@@ -40,37 +40,26 @@
     revealables.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // Contact form → mailto:
-  const form = document.querySelector('.contact__form');
-  if (form) {
+  // Newsletter signup → mailto: (swap for ConvertKit/Buttondown/Substack later)
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  document.querySelectorAll('.newsletter-form').forEach((form) => {
     const errorEl = form.querySelector('.form-error');
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const data = new FormData(form);
-      const name = String(data.get('name') || '').trim();
-      const email = String(data.get('email') || '').trim();
-      const message = String(data.get('message') || '').trim();
+      const email = String(new FormData(form).get('email') || '').trim();
 
-      if (!name || !email || !message) {
+      if (!email || !emailPattern.test(email)) {
         if (errorEl) {
           errorEl.hidden = false;
-          errorEl.textContent = 'Please fill in every field so we can help.';
-        }
-        return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        if (errorEl) {
-          errorEl.hidden = false;
-          errorEl.textContent = 'That email address looks off — mind checking it?';
+          errorEl.textContent = 'Please enter a valid email address.';
         }
         return;
       }
       if (errorEl) errorEl.hidden = true;
 
-      const subject = `New inquiry from ${name}`;
-      const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-      const href = `mailto:hello@themileswhisperer.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = href;
+      const subject = 'Newsletter signup';
+      const body = `Please add ${email} to the newsletter. I'd like the free guide: "5 KrisFlyer Sweet Spots from SIN Nobody Books".`;
+      window.location.href = `mailto:hello@themileswhisperer.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
-  }
+  });
 })();
